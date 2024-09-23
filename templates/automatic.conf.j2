@@ -1,0 +1,12 @@
+# {{ ansible_managed }}
+
+{% for keys, values in dnf_automatic_config_options_merged.items() %}
+{%   if not values %}
+{{ '[' }}{{ keys }}{{ ']' }}
+{%   else %}
+{{ '[' }}{{ keys }}{{ ']' }}
+{%     for key, value in values.items() %}
+{{ key }} = {{ value }}
+{%     endfor %}
+{%   endif %}
+{% endfor %}

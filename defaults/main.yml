@@ -1,0 +1,39 @@
+---
+
+dnf_automatic_debug: false
+
+dnf_automatic_package_ensure: present
+
+dnf_automatic_service_ensure: 'started'
+
+dnf_automatic_service_enable: true
+
+dnf_automatic_config_options: {}
+
+dnf_automatic_config_options_default:
+  commands:
+    upgrade_type: 'default'
+    random_sleep: 0
+    network_online_timeout: 60
+    download_updates: 'yes'
+    apply_updates: 'no'
+  emitters:
+    emit_via: 'stdio'
+  email:
+    email_from: 'root@example.com'
+    email_to: 'root'
+    email_host: 'localhost'
+  command:
+  command_email:
+    email_from: 'root@example.com'
+    email_to: 'root'
+  base:
+    debuglevel: 1
+
+dnf_automatic_timer_config_dir: '/etc/systemd/system/dnf-automatic.timer.d'
+
+dnf_automatic_timer_config_file: '/etc/systemd/system/dnf-automatic.timer.d/override.conf'
+
+dnf_automatic_timer_oncalendar: '*-*-* 6:00'
+
+dnf_automatic_timer_randomized_delay: '60m'

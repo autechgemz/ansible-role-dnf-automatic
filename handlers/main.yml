@@ -1,0 +1,16 @@
+---
+- name: Restart dnf_automatic
+  ansible.builtin.systemd:
+    name: "{{ dnf_automatic_service_name }}"
+    state: restarted
+  become: true
+
+- name: Reload dnf_automatic
+  ansible.builtin.systemd:
+    name: "{{ dnf_automatic_service_name }}"
+    state: reloaded
+  become: true
+
+- name: Exec systemd daemon-reload
+  ansible.builtin.command: systemctl daemon-reload
+  become: true

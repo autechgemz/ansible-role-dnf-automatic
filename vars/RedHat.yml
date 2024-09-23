@@ -1,0 +1,8 @@
+---
+
+dnf_automatic_package_name:
+  - dnf-automatic
+
+dnf_automatic_service_name: 'dnf-automatic.timer'
+
+dnf_automatic_config_file: '/etc/dnf/automatic.conf'

@@ -1,0 +1,13 @@
+---
+
+- name: Installation tasks
+  tags:
+    - dnf_automatic_install
+    - dnf_automatic
+  become: true
+  block:
+  - name: Install packages
+    when: ansible_os_family == 'RedHat'
+    ansible.builtin.yum:
+      name: "{{ dnf_automatic_package_name }}"
+      state: "{{ dnf_automatic_package_ensure }}"

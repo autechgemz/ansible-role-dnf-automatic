@@ -1,0 +1,39 @@
+---
+
+- name: Configration tasks
+  when: dnf_automatic_package_ensure != 'absent'
+  tags:
+    - dnf_automatic_config
+    - dnf_automatic
+  become: true
+  block:
+
+    - name: Merge dnf_automatic configration
+      ansible.builtin.set_fact:
+        dnf_automatic_config_options_merged: "{{ dnf_automatic_config_options_default | ansible.builtin.combine(dnf_automatic_config_options, recursive=True) }}"
+
+    - name: Manage dnf_automatic configration
+      ansible.builtin.template:
+        src: automatic.conf.j2
+        dest: "{{ dnf_automatic_config_file }}"
+        owner: root
+        group: root
+        mode: 0644
+      notify: Restart dnf_automatic
+
+    - name: Manage dnf-automatic.timer.d directory
+      ansible.builtin.file:
+        path: "{{ dnf_automatic_timer_config_dir }}"
+        owner: root
+        group: root
+        mode: 0755
+        state: directory
+
+    - name: Manage dnf_automatic timer configration
+      ansible.builtin.template:
+        src: dnf-automatic.timer.j2
+        dest: "{{ dnf_automatic_timer_config_file }}"
+        owner: root
+        group: root
+        mode: 0644
+      notify: Exec systemd daemon-reload
